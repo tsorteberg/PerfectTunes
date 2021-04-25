@@ -57,8 +57,18 @@ namespace PerfectTunes
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "",
+                    pattern: "{controller}/{action}/page/{pagenumber}/size/{pagesize}/sort/{sortfield}/{sortdirection}/filter/{brand}/{department}/{price}");
+
+                endpoints.MapControllerRoute(
+                    name: "",
+                    pattern: "{controller}/{action}/page/{pagenumber}/size/{pagesize}/sort/{sortfield}/{sortdirection}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
