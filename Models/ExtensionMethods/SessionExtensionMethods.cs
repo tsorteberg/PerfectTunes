@@ -19,7 +19,7 @@ namespace PerfectTunes.Models
 {
     // these methods make it easier to get and set objects in session
 
-    public static class SessionExtensions
+    public static class SessionExtensionMethods
     {
         public static void SetObject<T>(this ISession session, string key, T value) =>
             session.SetString(key, JsonConvert.SerializeObject(value));

@@ -21,7 +21,7 @@ namespace PerfectTunes.Models
     // extension methods that make working with request and response cookies 
     // similar to working with session
 
-    public static class CookieExtensions
+    public static class CookieExtensionMethods
     {
         public static string GetString(this IRequestCookieCollection cookies, string key) =>
             cookies[key];

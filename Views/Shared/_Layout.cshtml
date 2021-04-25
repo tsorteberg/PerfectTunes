@@ -16,7 +16,7 @@
 -->
 @{
     // get cart from session
-    //var cart = new Cart(Context);
+    var cart = new Cart(Context);
 
     // use current controller or area to determine if tab is active
     var current = ViewContext.RouteData.Values["area"]?.ToString() ??
@@ -69,7 +69,7 @@
                     <li class="nav-item @Nav.Active("Cart", current)">
                         <a class="nav-link" asp-action="Index" asp-controller="Cart" asp-area="">
                             <span class="fas fa-shopping-cart"></span>&nbsp;Cart
-                            <span class="badge badge-light"></span>
+                            <span class="badge badge-light">@cart.Count</span>
                         </a>
                     </li>
                     <!-- This link has not been implemented yet -->
