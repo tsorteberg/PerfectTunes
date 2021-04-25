@@ -14,24 +14,21 @@
 ***************************************************************/
 using PerfectTunes.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace PerfectTunes.Controllers
 {
     public class InstrumentController : Controller
     {
-        private FinalUnitOfWork data { get; set; }
-        public InstrumentController(PerfectTunesContext ctx) => data = new FinalUnitOfWork(ctx);
+        private PerfectTunesUnitOfWork data { get; set; }
+        public InstrumentController(PerfectTunesContext ctx) => data = new PerfectTunesUnitOfWork(ctx);
 
         public RedirectToActionResult Index() => RedirectToAction("List");
 
         public ViewResult List(InstrumentsGridDTO values)
         {
-            // get grid builder, which loads route segment values and stores them in session
             var builder = new InstrumentsGridBuilder(HttpContext.Session, values,
                 defaultSortField: nameof(Instrument.Name));
 
-            // create a InstrumentQueryOptions object to build a query expression for a page of data
             var options = new InstrumentQueryOptions
             {
                 Includes = "Brand, Department",
@@ -39,13 +36,9 @@ namespace PerfectTunes.Controllers
                 PageNumber = builder.CurrentRoute.PageNumber,
                 PageSize = builder.CurrentRoute.PageSize
             };
-            // call the SortFilter() method of the BookQueryOptions object and pass it the builder
-            // object. It uses the route information and the properties of the builder object to 
-            // add sort and filter options to the query expression. 
+
             options.SortFilter(builder);
 
-            // create view model and add page of book data, data for drop-downs, 
-            // the current route, and the total number of pages. 
             var vm = new InstrumentListViewModel
             {
                 Instruments = data.Instruments.List(options),
@@ -61,7 +54,6 @@ namespace PerfectTunes.Controllers
                 TotalPages = builder.GetTotalPages(data.Instruments.Count)
             };
 
-            // pass view model to view
             return View(vm);
         }
 
@@ -78,11 +70,8 @@ namespace PerfectTunes.Controllers
         [HttpPost]
         public RedirectToActionResult Filter(string[] filter, bool clear = false)
         {
-            // get current route segments from session
             var builder = new InstrumentsGridBuilder(HttpContext.Session);
 
-            // clear or update filter route segment values. If update, get author data
-            // from database so can add author name slug to author filter value.
             if (clear)
             {
                 builder.ClearFilterSegments();
@@ -94,8 +83,6 @@ namespace PerfectTunes.Controllers
                 builder.LoadFilterSegments(filter, brand);
             }
 
-            // save route data back to session and redirect to Book/List action method,
-            // passing dictionary of route segment values to build URL
             builder.SaveRouteSegments();
             return RedirectToAction("List", builder.CurrentRoute);
         }

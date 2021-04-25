@@ -36,7 +36,7 @@ namespace PerfectTunes
         {
             services.AddMemoryCache();
             services.AddSession();
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddDbContext<PerfectTunesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PerfectTunesContext")));
         }
 

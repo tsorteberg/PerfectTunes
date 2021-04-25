@@ -14,10 +14,10 @@
 ***************************************************************/
 namespace PerfectTunes.Models
 {
-    public class FinalUnitOfWork : IFinalUnitOfWork
+    public class PerfectTunesUnitOfWork : IFinalUnitOfWork
     {
         private PerfectTunesContext context { get; set; }
-        public FinalUnitOfWork(PerfectTunesContext ctx) => context = ctx;
+        public PerfectTunesUnitOfWork(PerfectTunesContext ctx) => context = ctx;
 
         private Repository<Instrument> instrumentData;
         public Repository<Instrument> Instruments
