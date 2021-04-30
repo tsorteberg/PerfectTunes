@@ -36,7 +36,6 @@ namespace PerfectTunes.Models
         [Required(ErrorMessage = "Please select a brand.")]
         public int BrandId { get; set; }
 
-        //[Required]
         public string LogoImage { get; set; }
 
         public Department Department { get; set; }

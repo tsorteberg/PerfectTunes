@@ -25,8 +25,11 @@ namespace PerfectTunes.Areas.Admin.Controllers
     public class InstrumentController : Controller
     {
         private PerfectTunesUnitOfWork data { get; set; }
-        public InstrumentController(PerfectTunesContext ctx) => data = new PerfectTunesUnitOfWork(ctx);
         private readonly IWebHostEnvironment hostingEnvironment;
+        public InstrumentController(PerfectTunesContext ctx, IWebHostEnvironment hostingEnvironment) {
+            data = new PerfectTunesUnitOfWork(ctx);
+            this.hostingEnvironment = hostingEnvironment;
+        }
 
         public ViewResult Index(InstrumentsGridDTO values)
         {
@@ -70,14 +73,19 @@ namespace PerfectTunes.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
+
                 if (vm.Image != null)
                 {
                     string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                     vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                    vm.Instrument.LogoImage = uniqueFileName;
                 }
-                vm.Instrument.LogoImage = "kittywitty.jpg";
+                else {
+                    vm.Instrument.LogoImage = "comingsoon.jpg";
+                }
+
                 data.Instruments.Insert(vm.Instrument);
                 data.Save();
 
@@ -99,6 +107,21 @@ namespace PerfectTunes.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+
+                if (vm.Image != null)
+                {
+                    string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.Image.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
+                    vm.Instrument.LogoImage = uniqueFileName;
+                }
+                else
+                {
+                    vm.Instrument.LogoImage = "comingsoon.jpg";
+                }
+
                 data.Instruments.Update(vm.Instrument);
                 data.Save();
 

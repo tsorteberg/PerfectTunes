@@ -9,14 +9,14 @@ using PerfectTunes.Models;
 namespace PerfectTunes.Migrations
 {
     [DbContext(typeof(PerfectTunesContext))]
-    [Migration("20210425134800_initial")]
+    [Migration("20210430072454_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -166,7 +166,6 @@ namespace PerfectTunes.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("LogoImage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

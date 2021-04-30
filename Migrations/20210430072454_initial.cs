@@ -43,7 +43,7 @@ namespace PerfectTunes.Migrations
                     Price = table.Column<double>(nullable: false),
                     DepartmentId = table.Column<string>(nullable: false),
                     BrandId = table.Column<int>(nullable: false),
-                    LogoImage = table.Column<string>(nullable: false)
+                    LogoImage = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

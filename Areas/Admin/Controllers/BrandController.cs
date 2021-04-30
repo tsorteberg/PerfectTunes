@@ -1,7 +1,7 @@
 ﻿/***************************************************************
-* Name        : BrandController.cs
+* Name        : Admin/Controllers/InstrumentController.cs
 * Author      : Tom Sorteberg
-* Created     : 04/18/2021
+* Created     : 04/30/2021
 * Course      : CIS 174
 * Version     : 1.0
 * OS          : Windows 10 Pro, Visual Studio Community 2019
@@ -12,22 +12,28 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
-using PerfectTunes.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using PerfectTunes.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PerfectTunes.Controllers
+namespace PerfectTunes.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class BrandController : Controller
-    {
-        //private Repository<Brand> data { get; set; }
-        //public BrandController(PerfectTunesContext ctx) => data = new Repository<Brand>(ctx);
-
+    {   
         private PerfectTunesUnitOfWork data { get; set; }
-        public BrandController(PerfectTunesContext ctx) => data = new PerfectTunesUnitOfWork(ctx);
+        private readonly IWebHostEnvironment hostingEnvironment;
+        public BrandController(PerfectTunesContext ctx, IWebHostEnvironment hostingEnvironment)
+        {
+            data = new PerfectTunesUnitOfWork(ctx);
+            this.hostingEnvironment = hostingEnvironment;
+        }
 
-        public IActionResult Index() => RedirectToAction("List");
-
-        public ViewResult List(GridDTO vals)
+        public ViewResult Index(GridDTO vals)
         {
             string defaultSort = nameof(Brand.BrandName);
             var builder = new GridBuilder(HttpContext.Session, vals, defaultSort);
@@ -52,27 +58,6 @@ namespace PerfectTunes.Controllers
             };
 
             return View(vm);
-        }
-
-        [HttpPost]
-        public RedirectToActionResult Shop(string id, bool clear = false)
-        {
-            var builder = new InstrumentsGridBuilder(HttpContext.Session);
-
-            if (clear)
-            {
-                builder.ClearFilterSegments();
-            }
-            else
-            {
-                string[] filter = { id, "any", "any" };
-                var brand = data.Brands.Get(filter[0].ToInt());
-                builder.CurrentRoute.PageNumber = 1;
-                builder.LoadFilterSegments(filter, brand);
-            }
-
-            builder.SaveRouteSegments();
-            return RedirectToAction("List", "Instrument", builder.CurrentRoute);
         }
     }
 }

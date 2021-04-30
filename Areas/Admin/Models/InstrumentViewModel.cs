@@ -23,9 +23,6 @@ namespace PerfectTunes.Models
         public Instrument Instrument { get; set; }
         public IEnumerable<Department> Departments { get; set; }
         public IEnumerable<Brand> Brands { get; set; }
-
-        //[Required(ErrorMessage = "Please choose profile image")]
-        //[Display(Name = "Profile Picture")]
         public IFormFile Image { get; set; }
     }
 }

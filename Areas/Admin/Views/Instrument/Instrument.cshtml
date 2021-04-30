@@ -17,22 +17,18 @@
 @model InstrumentViewModel
 
 @{
-    // this view is used for add, edit, and delete.
-    // Which one is determined by the action method name.
     var action = ViewContext.RouteData.Values["action"].ToString().Capitalize();
 
     ViewData["Title"] = $" | {action} Instrument";
 }
 
-<form asp-action="@action" asp-area="Admin" method="post">
+<form enctype="multipart/form-data" asp-action="@action" asp-area="Admin" method="post">
 
     <input type="hidden" asp-for="Instrument.InstrumentId" />
 
     <div class="form-group row">
         <div class="col-sm-2"><label>Name:</label></div>
 
-        @* if deleting, display title in a label and put value in hidden field
-            for delete message. Otherwise, provide a text box*@
         @if (Operation.IsDelete(action))
         {
             <div class="col-sm-4"><label>@Model.Instrument.Name</label></div>
@@ -49,7 +45,6 @@
         }
     </div>
 
-    @* if not deleting, display text boxes and drop-downs for rest of fields*@
     @if (!Operation.IsDelete(action))
     {
         <div class="form-group row">
@@ -64,8 +59,8 @@
         <div class="form-group row">
             <div class="col-sm-2"><label>Department:</label></div>
             <div class="col-sm-4">
-                <select asp-for="Instrument.DepartmentId" class="form-control"
-                        asp-items='@new SelectList(Model.Departments, "DepartmentId", "Name", Model.Instrument.DepartmentId)'>
+                <select asp-for="Instrument.DepartmentId" class="form-control" asp-items='@new SelectList(Model.Departments, "DepartmentId", "Name", Model.Instrument.DepartmentId)'>
+                    <option value="" disabled selected>Select Department</option>
                 </select>
             </div>
             <div class="col-sm-6">
@@ -73,26 +68,32 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-sm-2">
-                <label>Brand:</label><br />
-            </div>
+            <div class="col-sm-2"><label>Brand:</label><br /></div>
             <div class="col-sm-4">
-                <select asp-for="Instrument.BrandId" class="form-control"
-                        asp-items='@new SelectList(Model.Brands, "BrandId", "BrandName", Model.Instrument.BrandId)'>
+                <select asp-for="Instrument.BrandId" class="form-control" asp-items='@new SelectList(Model.Brands, "BrandId", "BrandName", Model.Instrument.BrandId)'>
+                    <option value="" disabled selected>Select Brand</option>
                 </select>
             </div>
             <div class="col-sm-6">
                 <span asp-validation-for="Instrument.BrandId" class="text-danger"></span>
             </div>
         </div>
+        @if(action.Equals("Edit")) {
+            <div class="form-group row">
+                <div class="col-sm-2"><label>Current Image File:</label></div>
+                <div class="col-sm-4">
+                    <input type="text" asp-for="Instrument.LogoImage" class="form-control" readonly />
+                </div>
+            </div>
+        }
         <div class="form-group row">
             <div class="col-sm-2">
-                <label>Image:</label>
+                <label>Upload Image File:</label>
             </div>
             <div class="custom-file col-sm-4">
                 <!--<input type="text" asp-for="Instrument.LogoImage" class="form-control" />-->
                 <label class="custom-file-label">Choose File</label>
-                <input asp-for="Image" class="form-control custom-file-input">
+                <input asp-for="Image" class="form-control custom-file-input" type="file">
             </div>
             <div class="col-sm-6">
                 <span asp-validation-for="Image" class="text-danger"></span>
@@ -103,14 +104,12 @@
         <div class="col-sm-4 offset-sm-2">
             <button type="submit" class="btn btn-primary">@action</button>
 
-            @* return user to main admin page after add, or to search page otherwise *@
             <a asp-action="@(Operation.IsAdd(action) ? "Index" : "Index")" class="btn btn-primary">Cancel</a>
         </div>
     </div>
 </form>
 
 <script>
-    // Add the following code if you want the name of the file appear on select
     $(".custom-file-input").on("change", function () {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);

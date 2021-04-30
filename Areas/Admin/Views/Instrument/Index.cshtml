@@ -19,7 +19,6 @@
 @{
     ViewData["Title"] = " | Manage Instruments";
 
-    // aliases to make paging, sorting, and filtering code shorter
     RouteDictionary current = Model.CurrentRoute;
     RouteDictionary routes = Model.CurrentRoute.Clone();
 }
@@ -27,8 +26,6 @@
 <h5 class="mt-1"><a asp-action="Add">Add an Instrument</a></h5>
 
 <table class="table table-bordered table-sm">
-    @* for each sortable table column, update the route dictionary with the field to sort by, and then
-        use that route dictionary and the current route to create route segments for sorting link *@
     <thead class="thead-dark">
         <tr>
             <th></th>
@@ -82,11 +79,9 @@
             <td>@instrument.Department?.Name</td>
             <td>@instrument.Price.ToString("c")</td>
             <td>
-                <div class="float-right">
-                    <a asp-action="Edit" asp-route-id="@instrument.InstrumentId"
-                       class="btn btn-primary">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@instrument.InstrumentId"
-                       class="btn btn-primary">Delete</a>
+                <div class="text-center align-middle">
+                    <a asp-action="Edit" asp-route-id="@instrument.InstrumentId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@instrument.InstrumentId" class="btn btn-primary">Delete</a>
                 </div>
             </td>
         </tr>
