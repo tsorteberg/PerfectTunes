@@ -12,6 +12,7 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,12 +36,11 @@ namespace PerfectTunes.Models
         [Required(ErrorMessage = "Please select a brand.")]
         public int BrandId { get; set; }
 
-        [Required]
+        //[Required]
         public string LogoImage { get; set; }
 
         public Department Department { get; set; }
         public Brand Brand { get; set; }
-
 
     }
 }

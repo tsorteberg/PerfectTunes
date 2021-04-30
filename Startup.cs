@@ -61,6 +61,11 @@ namespace PerfectTunes
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Instrument}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "",
                     pattern: "{controller}/{action}/page/{pagenumber}/size/{pagesize}/sort/{sortfield}/{sortdirection}/filter/{brand}/{department}/{price}");
