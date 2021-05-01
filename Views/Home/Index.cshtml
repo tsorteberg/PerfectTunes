@@ -25,6 +25,7 @@
                    asp-action="Details"
                    asp-route-id="@Model.InstrumentId"
                    asp-route-slug="@Model.Name.Slug()">
+                    <img style="height: 50px; width: 50px;" src="~/images/@Model.LogoImage" alt="" />
                     @Model.Name
                 </a>
             </h5>

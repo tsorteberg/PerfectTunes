@@ -1,8 +1,8 @@
 ﻿<!--
 /***************************************************************
-* Name        : Admin/Views/Brand/Index.cshtml
+* Name        : Admin/Views/Department/Index.cshtml
 * Author      : Tom Sorteberg
-* Created     : 04/30/2021
+* Created     : 05/01/2021
 * Course      : CIS 174
 * Version     : 1.0
 * OS          : Windows 10 Pro, Visual Studio Community 2019
@@ -14,44 +14,37 @@
 * to my program.
 ***************************************************************/
 -->
-@model BrandListViewModel
+@model DepartmentListViewModel
+
 @{
-    ViewData["Title"] = " | Brand Catalog";
+    ViewData["Title"] = " | Manage Departments";
 
     RouteDictionary current = Model.CurrentRoute;
     RouteDictionary routes = Model.CurrentRoute.Clone();
 }
 
-<h5 class="mt-1"><a asp-action="Add">Add a Brand</a></h5>
+<h5 class="mt-1"><a asp-action="Add">Add a Department</a></h5>
 
 <table class="table table-sm">
     <thead class="thead-dark">
         <tr>
-            <th></th>
             <th>
-                @{ routes.SetSortAndDirection(nameof(Brand.BrandName), current); }
+                @{ routes.SetSortAndDirection(nameof(Department.Name), current); }
                 <a asp-action="Index" asp-all-route-data="@routes"
-                   class="text-white">Brand Name</a>
-            </th>
-            <th>
-                @{ routes.SetSortAndDirection(nameof(Brand.ProductLine), current); }
-                <a asp-action="Index" asp-all-route-data="@routes"
-                   class="text-white">Product Line</a>
+                   class="text-white">Departments</a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (Brand brand in Model.Brands)
+        @foreach (Department department in Model.Departments)
         {
             <tr>
-                <td style="text-align: center;"><img style="height: 50px; width: 50px;" src="~/images/@brand.LogoImage" alt="" /></td>
-                <td>@brand.BrandName</td>
-                <td>@brand.ProductLine</td>
+                <td>@department.Name</td>
                 <td>
                     <div class="float-right">
-                        <a asp-action="Edit" asp-route-id="@brand.BrandId" class="btn btn-primary">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@brand.BrandId" class="btn btn-primary">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@department.DepartmentId" class="btn btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@department.DepartmentId" class="btn btn-primary">Delete</a>
                     </div>
                 </td>
             </tr>

@@ -19,9 +19,9 @@
 @{
     ViewData["Title"] = " | Instrument Catalog";
 
-    // aliases to make paging, sorting, and filtering code shorter
     RouteDictionary current = Model.CurrentRoute;
     RouteDictionary routes = Model.CurrentRoute.Clone();
+
 }
 
 <h1>Instrument Catalog</h1>
@@ -45,11 +45,8 @@
 
 </form>
 
-@* add to cart form *@
 <form asp-action="Add" asp-controller="Cart" method="post">
-    <table class="table table-bordered table-sm">
-        @* for each sortable table column, update the route dictionary with the field to sort by, and then
-            use that route dictionary and the current route to create route segments for sorting link *@
+    <table class="table table-sm">
         <thead class="thead-dark">
             <tr>
                 <th></th>
@@ -88,11 +85,7 @@
                     <td style="text-align: center;"><img style="height: 50px; width: 50px;" src="~/images/@instrument.Brand.LogoImage" alt="" /></td>
                     <td>
                         <p>
-                            <a asp-action="Details" asp-controller="Brand"
-                               asp-route-id="@instrument.BrandId"
-                               asp-route-slug="@instrument.Brand.BrandName.Slug()">
-                                @instrument.Brand.BrandName
-                            </a>
+                            <a href="/Instrument/List/page/1/size/4/sort/Name/asc/filter/brand-@instrument.Brand.BrandId-@instrument.Brand.BrandName.ToString().Replace(' ', '-').ToLower()/department-all/price-all">@instrument.Brand.BrandName</a>
                         </p>
                     </td>
  
@@ -100,7 +93,7 @@
                     <td>@instrument.Price.ToString("c")</td>
                     <td style="text-align: center;">
                         <button type="submit" name="id" value="@instrument.InstrumentId"
-                                class="btn btn-primary">
+                                class="btn btn-primary float-right">
                             Add To Cart
                         </button>
                     </td>

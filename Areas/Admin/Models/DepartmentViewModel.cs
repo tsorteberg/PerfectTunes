@@ -1,5 +1,5 @@
 ﻿/***************************************************************
-* Name        : Admin/Models/BrandViewModel.cs
+* Name        : Admin/Models/DepartmentViewModel.cs
 * Author      : Tom Sorteberg
 * Created     : 05/01/2021
 * Course      : CIS 174
@@ -12,13 +12,10 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
-using Microsoft.AspNetCore.Http;
-
 namespace PerfectTunes.Models
 {
-    public class BrandViewModel
+    public class DepartmentViewModel
     {
-        public Brand Brand { get; set; }
-        public IFormFile Image { get; set; }
+        public Department Department { get; set; }
     }
 }

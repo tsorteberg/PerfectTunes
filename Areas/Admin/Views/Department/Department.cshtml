@@ -1,0 +1,56 @@
+﻿<!--
+/***************************************************************
+* Name        : Admin/Views/Department/Department.cshtml
+* Author      : Tom Sorteberg
+* Created     : 05/01/2021
+* Course      : CIS 174
+* Version     : 1.0
+* OS          : Windows 10 Pro, Visual Studio Community 2019
+* Copyright   : This is my own original work based on
+*               specifications issued by our instructor
+* Description : Final Project
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program.
+***************************************************************/
+-->
+@model DepartmentViewModel
+
+@{
+    var action = ViewContext.RouteData.Values["action"].ToString().Capitalize();
+
+    ViewData["Title"] = $" | {action} Department";
+}
+
+<h1>@action Department</h1>
+
+<form asp-action="@action" asp-area="Admin" method="post">
+
+    <input type="hidden" asp-for="Department.DepartmentId" />
+    <input type="hidden" name="Operation" value="@action" />
+
+    @if (Operation.IsDelete(action))
+    {
+        <div class="col-sm-4"><label>@Model.Department.Name</label></div>
+        <input type="hidden" asp-for="Department.Name" />
+    }
+    else
+    {
+        <div class="form-group row">
+            <div class="col-sm-2"><label>Department Name:</label></div>
+            <div class="col-sm-4">
+                <input type="text" asp-for="@Model.Department.Name" class="form-control" />
+            </div>
+            <div class="col-sm-6">
+                <span asp-validation-for="@Model.Department.Name" class="text-danger"></span>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="col-sm-4 offset-sm-2">
+            <button type="submit" class="btn btn-primary">@action</button>
+            <a asp-action="Index" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+    }
+</form>

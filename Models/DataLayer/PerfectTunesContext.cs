@@ -12,11 +12,12 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace PerfectTunes.Models
 {
-    public class PerfectTunesContext : DbContext
+    public class PerfectTunesContext : IdentityDbContext<User>
     {
         public PerfectTunesContext(DbContextOptions<PerfectTunesContext> options)
             : base(options)
@@ -27,12 +28,12 @@ namespace PerfectTunes.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Instrument: remove cascading delete with Genre
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Instrument>().HasOne(d => d.Department)
                 .WithMany(i => i.Instruments)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // seed initial data
             modelBuilder.ApplyConfiguration(new SeedDepartments());
             modelBuilder.ApplyConfiguration(new SeedInstruments());
             modelBuilder.ApplyConfiguration(new SeedBrands());

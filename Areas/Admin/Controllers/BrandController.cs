@@ -162,7 +162,6 @@ namespace PerfectTunes.Areas.Admin.Controllers
             {
                 vm.Brand = data.Brands.Get(new QueryOptions<Brand>
                 {
-                    //Includes = "Brand",
                     Where = b => b.BrandId == (id ?? vm.Brand.BrandId)
                 });
             }

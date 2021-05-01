@@ -18,14 +18,13 @@
 @{
     ViewData["Title"] = " | Brand Catalog";
 
-    // aliases to make paging and sorting code shorter
     RouteDictionary current = Model.CurrentRoute;
     RouteDictionary routes = Model.CurrentRoute.Clone();
 }
 
 <h1>Brand Catalog</h1>
 
-<table class="table table-bordered table-sm">
+<table class="table table-sm">
     @* for the name columns, update the route dictionary with the field to sort by, and then use
         that route dictionary and the current route to create route segments for sorting link *@
     <thead class="thead-dark">
@@ -52,7 +51,7 @@
                 <td>@brand.BrandName</td>
                 <td>@brand.ProductLine</td>
                 <td>
-                    <a href="/Instrument/List/page/1/size/4/sort/Name/asc/filter/brand-@brand.BrandId-@brand.BrandName/department-all/price-all">Shop @brand.BrandName</a>
+                    <a href="/Instrument/List/page/1/size/4/sort/Name/asc/filter/brand-@brand.BrandId-@brand.BrandName.ToString().Replace(' ', '-').ToLower()/department-all/price-all">Shop @brand.BrandName</a>
                 </td>
             </tr>
         }

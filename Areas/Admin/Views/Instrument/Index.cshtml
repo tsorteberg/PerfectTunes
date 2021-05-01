@@ -25,7 +25,7 @@
 
 <h5 class="mt-1"><a asp-action="Add">Add an Instrument</a></h5>
 
-<table class="table table-bordered table-sm">
+<table class="table table-sm">
     <thead class="thead-dark">
         <tr>
             <th></th>
@@ -79,7 +79,7 @@
             <td>@instrument.Department?.Name</td>
             <td>@instrument.Price.ToString("c")</td>
             <td>
-                <div class="text-center align-middle">
+                <div class="float-right">
                     <a asp-action="Edit" asp-route-id="@instrument.InstrumentId" class="btn btn-primary">Edit</a>
                     <a asp-action="Delete" asp-route-id="@instrument.InstrumentId" class="btn btn-primary">Delete</a>
                 </div>

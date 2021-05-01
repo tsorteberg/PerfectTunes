@@ -1,5 +1,5 @@
 ﻿/***************************************************************
-* Name        : Admin/Models/BrandViewModel.cs
+* Name        : /Models/DomainModels/User.cs
 * Author      : Tom Sorteberg
 * Created     : 05/01/2021
 * Course      : CIS 174
@@ -12,13 +12,15 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
-using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace PerfectTunes.Models
 {
-    public class BrandViewModel
+    public class User : IdentityUser
     {
-        public Brand Brand { get; set; }
-        public IFormFile Image { get; set; }
+        [NotMapped]
+        public IList<string> RoleNames { get; set; }
     }
 }

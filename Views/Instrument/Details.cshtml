@@ -18,6 +18,10 @@
 
 @{
     ViewData["Title"] = " | Instrument Details";
+    String Id = Model.Brand.BrandId.ToString().ToLower();
+    String Name = Model.Brand.BrandName.ToString().ToLower();
+    String BrandRoute = Id + "-" + Name;
+    BrandRoute.ToString().Replace(' ', '-');
 }
 
 <h1>Instrument Details</h1>
@@ -35,7 +39,7 @@
             <td>Brand</td>
             <td>
                  <p>
-                    <a asp-action="Details" asp-controller="Brand" asp-route-id="@Model.InstrumentId" asp-route-slug="@Model.Brand.BrandName.Slug()">@Model.Brand.BrandName</a>
+                     <a href="/Instrument/List/page/1/size/4/sort/Name/asc/filter/brand-@BrandRoute/department-all/price-all">@Model.Brand.BrandName</a>
                  </p>
             </td>
         </tr>
