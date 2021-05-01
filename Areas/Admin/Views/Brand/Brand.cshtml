@@ -1,0 +1,95 @@
+﻿<!--
+/***************************************************************
+* Name        : Admin/Views/Brand/Brand.cshtml
+* Author      : Tom Sorteberg
+* Created     : 05/01/2021
+* Course      : CIS 174
+* Version     : 1.0
+* OS          : Windows 10 Pro, Visual Studio Community 2019
+* Copyright   : This is my own original work based on
+*               specifications issued by our instructor
+* Description : Final Project
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program.
+***************************************************************/
+-->
+@model BrandViewModel
+
+@{
+    var action = ViewContext.RouteData.Values["action"].ToString().Capitalize();
+
+    ViewData["Title"] = $" | {action} Genre";
+}
+
+<h1>@action Brand</h1>
+
+<form enctype="multipart/form-data" asp-action="@action" asp-area="Admin" method="post">
+
+    <input type="hidden" asp-for="Brand.BrandId" />
+
+    <input type="hidden" name="Operation" value="@action" />
+
+    @if (Operation.IsDelete(action))
+    {
+        <div class="col-sm-4"><label>@Model.Brand.BrandName @Model.Brand.ProductLine</label></div>
+        <input type="hidden" asp-for="Brand.BrandName" />
+        <input type="hidden" asp-for="Brand.ProductLine" />
+    }
+    else
+    {
+        <div class="form-group row">
+            <div class="col-sm-2"><label>Brand Name:</label></div>
+            <div class="col-sm-4">
+                <input type="text" asp-for="@Model.Brand.BrandName" class="form-control" />
+            </div>
+            <div class="col-sm-6">
+                <span asp-validation-for="@Model.Brand.BrandName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2"><label>Product Line:</label></div>
+            <div class="col-sm-4">
+                <input type="text" asp-for="@Model.Brand.ProductLine" class="form-control" />
+            </div>
+            <div class="col-sm-6">
+                <span asp-validation-for="@Model.Brand.ProductLine" class="text-danger"></span>
+            </div>
+        </div>
+        @if (action.Equals("Edit"))
+        {
+            <div class="form-group row">
+                <div class="col-sm-2"><label>Current Image File:</label></div>
+                <div class="col-sm-4">
+                    <input type="text" asp-for="Brand.LogoImage" class="form-control" readonly />
+                </div>
+            </div>
+        }
+        <div class="form-group row">
+            <div class="col-sm-2">
+                <label>Upload Image File:</label>
+            </div>
+            <div class="custom-file col-sm-4">
+                <label class="custom-file-label">Choose File</label>
+                <input asp-for="Image" class="form-control custom-file-input" type="file">
+            </div>
+            <div class="col-sm-6">
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-sm-4 offset-sm-2">
+            <button type="submit" class="btn btn-primary">@action</button>
+            <a asp-action="Index" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
