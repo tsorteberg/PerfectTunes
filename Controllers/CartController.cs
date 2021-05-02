@@ -1,5 +1,5 @@
 ﻿/***************************************************************
-* Name        : CartController.cs
+* Name        : PerfectTunes/Controllers/CartController.cs
 * Author      : Tom Sorteberg
 * Created     : 04/22/2021
 * Course      : CIS 174
@@ -12,11 +12,13 @@
 * unmodified. I have not given other fellow student(s) access
 * to my program.
 ***************************************************************/
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PerfectTunes.Models;
 
 namespace PerfectTunes.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private Repository<Instrument> data { get; set; }

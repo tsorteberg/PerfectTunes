@@ -1,5 +1,5 @@
 ﻿/***************************************************************
-* Name        : InstrumentListViewModel.cs
+* Name        : PerfectTunes/Models/ViewModels/InstrumentListViewModel.cs
 * Author      : Tom Sorteberg
 * Created     : 04/19/2021
 * Course      : CIS 174
@@ -22,7 +22,6 @@ namespace PerfectTunes.Models
         public RouteDictionary CurrentRoute { get; set; }
         public int TotalPages { get; set; }
 
-        // data for filter drop-downs - one hardcoded
         public IEnumerable<Brand> Brands { get; set; }
         public IEnumerable<Department> Departments { get; set; }
         public Dictionary<string, string> Prices =>

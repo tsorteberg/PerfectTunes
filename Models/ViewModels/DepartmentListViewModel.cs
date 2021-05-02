@@ -1,5 +1,5 @@
 ﻿/***************************************************************
-* Name        : DepartmentListViewModel.cs
+* Name        : PerfectTunes/Models/ViewModels/DepartmentListViewModel.cs
 * Author      : Tom Sorteberg
 * Created     : 05/01/2021
 * Course      : CIS 174

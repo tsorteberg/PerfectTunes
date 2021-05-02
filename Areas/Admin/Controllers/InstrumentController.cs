@@ -14,13 +14,14 @@
 ***************************************************************/
 using System;
 using System.IO;
-using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PerfectTunes.Models;
 
 namespace PerfectTunes.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class InstrumentController : Controller
     {

@@ -12,12 +12,13 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PerfectTunes.Models;
-using System.Linq;
 
 namespace PerfectTunes.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class DepartmentController : Controller
     {

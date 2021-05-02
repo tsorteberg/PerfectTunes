@@ -1,7 +1,7 @@
 ﻿/***************************************************************
-* Name        : PerfectTunes/Models/ViewModels/Nav.cs
+* Name        : PerfectTunes/Areas/Admin/Models/UserViewModel.cs
 * Author      : Tom Sorteberg
-* Created     : 04/19/2021
+* Created     : 05/01/2021
 * Course      : CIS 174
 * Version     : 1.0
 * OS          : Windows 10 Pro, Visual Studio Community 2019
@@ -12,13 +12,15 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
+
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+
 namespace PerfectTunes.Models
 {
-    public static class Nav
+    public class UserViewModel
     {
-        public static string Active(string value, string current) =>
-            (value == current) ? "active" : "";
-        public static string Active(int value, int current) =>
-            (value == current) ? "active" : "";
+        public IEnumerable<User> Users { get; set; }
+        public IEnumerable<IdentityRole> Roles { get; set; }
     }
 }

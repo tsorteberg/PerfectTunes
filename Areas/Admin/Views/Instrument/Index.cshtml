@@ -1,6 +1,6 @@
 ﻿<!--
 /***************************************************************
-* Name        : Admin/Views/Instrument/Index.cshtml
+* Name        : Areas/Admin/Views/Instrument/Index.cshtml
 * Author      : Tom Sorteberg
 * Created     : 04/25/2021
 * Course      : CIS 174
@@ -59,20 +59,13 @@
         <tr>
             <td style="text-align: center;"><img style="height: 50px; width: 50px;" src="~/images/@instrument.LogoImage" alt="" /></td>
             <td>
-                <a asp-action="Details" asp-route-id="@instrument.InstrumentId"
-                   asp-route-slug="@instrument.Name.Slug()">
-                    @instrument.Name
-                </a>
+                @instrument.Name
             </td>
 
             <td style="text-align: center;"><img style="height: 50px; width: 50px;" src="~/images/@instrument.Brand.LogoImage" alt="" /></td>
             <td>
                 <p>
-                    <a asp-action="Details" asp-controller="Brand"
-                       asp-route-id="@instrument.BrandId"
-                       asp-route-slug="@instrument.Brand.BrandName.Slug()">
-                        @instrument.Brand.BrandName
-                    </a>
+                    @instrument.Brand.BrandName
                 </p>
             </td>
 

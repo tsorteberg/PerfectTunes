@@ -1,7 +1,7 @@
 ﻿/***************************************************************
-* Name        : PerfectTunes/Models/ViewModels/Nav.cs
+* Name        : Areas/Admin/Models/ChangePasswordViewModel.cs
 * Author      : Tom Sorteberg
-* Created     : 04/19/2021
+* Created     : 05/01/2021
 * Course      : CIS 174
 * Version     : 1.0
 * OS          : Windows 10 Pro, Visual Studio Community 2019
@@ -12,13 +12,19 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
+using System.ComponentModel.DataAnnotations;
+
 namespace PerfectTunes.Models
 {
-    public static class Nav
+    public class ChangePasswordViewModel
     {
-        public static string Active(string value, string current) =>
-            (value == current) ? "active" : "";
-        public static string Active(int value, int current) =>
-            (value == current) ? "active" : "";
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "Please enter password.")]
+        public string OldPassword { get; set; }
+
+        [Required(ErrorMessage = "Please enter new password.")]
+        [DataType(DataType.Password)]
+        public string NewPassword { get; set; }
     }
 }

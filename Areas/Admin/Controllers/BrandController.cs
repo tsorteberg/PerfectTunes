@@ -1,5 +1,5 @@
 ﻿/***************************************************************
-* Name        : Admin/Controllers/InstrumentController.cs
+* Name        : Areas/Admin/Controllers/InstrumentController.cs
 * Author      : Tom Sorteberg
 * Created     : 04/30/2021
 * Course      : CIS 174
@@ -12,17 +12,16 @@
 * unmodified. I have not given other fellow student(s) access 
 * to my program.         
 ***************************************************************/
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PerfectTunes.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PerfectTunes.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class BrandController : Controller
     {

@@ -1,6 +1,6 @@
 ﻿<!--
 /***************************************************************
-* Name        : Admin/Views/Shared/_AdminLayout.cshtml
+* Name        : Areas/Admin/Views/Shared/_AdminLayout.cshtml
 * Author      : Tom Sorteberg
 * Created     : 04/18/2021
 * Course      : CIS 174
@@ -22,8 +22,6 @@
     var current = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 
-@* since many admin views deal with user entry and data validation,
-    jQuery validation libraries are included here rather than in individual views. *@
 @section scripts {
     <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -52,6 +50,12 @@
         <a asp-action="Index" asp-controller="Department"
            class="nav-link @Nav.Active("Department", current)">
             Manage Departments
+        </a>
+    </li>
+    <li class="nav-item">
+        <a asp-action="Index" asp-controller="User"
+           class="nav-link @Nav.Active("User", current)">
+            Manage Users
         </a>
     </li>
 </ul>

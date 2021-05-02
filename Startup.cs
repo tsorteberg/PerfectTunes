@@ -83,6 +83,8 @@ namespace PerfectTunes
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            PerfectTunesContext.CreateAdminUser(app.ApplicationServices).Wait();
         }
     }
 }
