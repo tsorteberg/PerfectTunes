@@ -38,6 +38,30 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     @RenderSection("scripts", false)
+
+    <style>
+
+        .main-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sub-container {
+            flex-grow: 1 1 0;
+            display: flex;
+            padding: 15px;
+        }
+
+        .sub-container img {
+            width: 100%;
+            height: 100%;
+            border: solid 2px grey;
+            border-radius: 15px;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container">
@@ -125,6 +149,16 @@
             }
             @RenderBody()
         </main>
+
+        <footer class="page-footer font-small blue">
+
+            <div class="footer-copyright text-center py-3">
+                © 2021 Copyright:
+                <a href=""> perfecttunes.com</a>
+            </div>
+
+        </footer>
+
     </div>
 
 </body>

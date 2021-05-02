@@ -26,9 +26,50 @@
                    asp-route-id="@Model.InstrumentId"
                    asp-route-slug="@Model.Name.Slug()">
                     <img style="height: 50px; width: 50px;" src="~/images/@Model.LogoImage" alt="" />
-                    @Model.Name
+                    @Model.Name - Sale: $@Model.Price
                 </a>
             </h5>
         </li>
     </ul>
+</div>
+<div class="text-center">
+    <h1>Shop by Department</h1>
+</div>
+<div class="main-container">
+    <div class="sub-container">
+        <a href="/instrument/list/page/1/size/4/sort/name/asc/filter/brand-all/department-strings/price-all">
+            <img src="images/Strings.jpg" alt="Strings">
+        </a>
+    </div>
+
+    <div class="sub-container">
+        <a href="/instrument/list/page/1/size/4/sort/name/asc/filter/brand-all/department-percussion/price-all">
+            <img src="images/Percussion.jpg" alt="Percussion">
+        </a>
+    </div>
+
+    <div class="sub-container">
+        <a href="/instrument/list/page/1/size/4/sort/name/asc/filter/brand-all/department-keys/price-all">
+            <img src="images/Keys.jpg" alt="Keys">
+        </a>
+    </div>
+
+    <div class="sub-container">
+        <a href="/instrument/list/page/1/size/4/sort/name/asc/filter/brand-all/department-brass/price-all">
+            <img src="images/Brass.jpg" alt="Brass">
+        </a>
+    </div>
+
+    <div class="sub-container">
+        <a href="/instrument/list/page/1/size/4/sort/name/asc/filter/brand-all/department-woodwinds/price-all">
+            <img src="images/Woodwinds.jpg" alt="Woodwinds">
+        </a>
+    </div>
+
+    <div class="sub-container">
+        <a href="/instrument/list/page/1/size/4/sort/name/asc/filter/brand-all/department-gear/price-all">
+            <img src="images/Gear.jpg" alt="Gear">
+        </a>
+    </div>
+
 </div>
