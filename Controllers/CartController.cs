@@ -13,8 +13,13 @@
 * to my program.
 ***************************************************************/
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PerfectTunes.Models;
+using PerfectTunes.Models.DomainModels;
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace PerfectTunes.Controllers
 {
@@ -22,7 +27,13 @@ namespace PerfectTunes.Controllers
     public class CartController : Controller
     {
         private Repository<Instrument> data { get; set; }
-        public CartController(PerfectTunesContext ctx) => data = new Repository<Instrument>(ctx);
+        private Repository<Order> repo { get; set; }
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CartController(PerfectTunesContext ctx, IHttpContextAccessor httpContextAccessor) {
+            data = new Repository<Instrument>(ctx);
+            repo = new Repository<Order>(ctx);
+            _httpContextAccessor = httpContextAccessor;
+        }
 
 
         private Cart GetCart()
@@ -130,6 +141,86 @@ namespace PerfectTunes.Controllers
             return RedirectToAction("Index");
         }
 
-        public ViewResult Checkout() => View();
+        [HttpGet]
+        public ViewResult Checkout() {
+
+            Cart cart = GetCart();
+
+            var builder = new InstrumentsGridBuilder(HttpContext.Session);
+
+            var summary = new CartViewModel
+            {
+                List = cart.List,
+                Subtotal = cart.Subtotal,
+                InstrumentGridRoute = builder.CurrentRoute
+            };
+
+            var vm = new OrderViewModel();
+            vm.Cart = summary;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult Checkout(OrderViewModel vm)
+        {
+            Cart cart = GetCart();
+
+            var builder = new InstrumentsGridBuilder(HttpContext.Session);
+
+            var summary = new CartViewModel
+            {
+                List = cart.List,
+                Subtotal = cart.Subtotal,
+                InstrumentGridRoute = builder.CurrentRoute
+            };
+
+            if (ModelState.IsValid)
+            {
+                var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                Order order = new Order();
+                order.UserId = userId;
+                List<OrderItem> orderItems = new List<OrderItem>();
+
+                foreach (CartItem cartItem in cart.List) {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.Name = cartItem.Instrument.Name;
+                    orderItem.Brand = cartItem.Instrument.Brand.BrandName;
+                    orderItem.Quantity = cartItem.Quantity;
+                    orderItem.Price = cartItem.Subtotal;
+                    orderItems.Add(orderItem);
+                }
+
+                order.OrderItems = orderItems;
+                order.OrderDate = DateTime.Now;
+                order.FirstName = vm.FirstName;
+                order.LastName = vm.LastName;
+                order.Address = vm.Address;
+                order.City = vm.City;
+                order.State = vm.State;
+                order.Zip = vm.Zip;
+                order.Phone = vm.Phone;
+                order.Email = vm.Email;
+                order.CCName = vm.CCName;
+                order.CCNum = vm.CCNum;
+                order.CCMon = vm.CCMon;
+                order.CCYear = vm.CCYear;
+                order.CCCode = vm.CCCode;
+                order.SubTotal = cart.Subtotal;
+                order.Total = cart.Subtotal;
+                order.Status = "Ordered";
+
+                repo.Insert(order);
+                data.Save();
+
+                TempData["message"] = $"Your order has been placed.";
+
+                return RedirectToAction("Index");
+            }
+            else {
+                vm = new OrderViewModel();
+                vm.Cart = summary;
+                return View(vm);
+            }
+        }
     }
 }

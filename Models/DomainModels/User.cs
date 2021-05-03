@@ -15,11 +15,15 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using PerfectTunes.Models.DomainModels;
 
 namespace PerfectTunes.Models
 {
     public class User : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         [NotMapped]
         public IList<string> RoleNames { get; set; }
     }

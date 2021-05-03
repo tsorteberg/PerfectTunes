@@ -43,6 +43,8 @@ namespace PerfectTunes
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PerfectTunesContext>()
               .AddDefaultTokenProviders();
+
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

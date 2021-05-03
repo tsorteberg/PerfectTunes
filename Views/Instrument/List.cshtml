@@ -26,7 +26,6 @@
 
 <h1>Instrument Catalog</h1>
 
-@* filter form *@
 <form asp-action="Filter" method="post" class="form-inline">
     <label>Brand: </label>
     <select name="filter" onchange="this.form.submit()" class="form-control m-2" asp-items="@(new SelectList(Model.Brands, "BrandId", "BrandName", current.BrandFilter))">

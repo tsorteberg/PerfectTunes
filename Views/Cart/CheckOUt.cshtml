@@ -14,21 +14,199 @@
 * to my program.
 ***************************************************************/
 -->
+@model OrderViewModel
 @{
     ViewData["Title"] = "Checkout";
 }
 
-<h1>Checkout</h1>
-<ul class="list-group">
-    <li class="list-group-item bg-danger text-white">
-        <h4>Don't roll your own checkout! It isn't secure!</h4>
-    </li>
-    <li class="list-group-item bg-warning">
-        Use a third party payment service, like
-        <a href="https://stripe.com/" target="_blank">Stripe</a> or
-        <a href="https://transferwise.com/us" target="_blank">TransferWise</a>.
+<h1>Order Summary</h1>
 
-        Most are pretty easy to incorporate in to your own web application, and then
-        you aren't handling money or trying to store credit card numbers.
-    </li>
-</ul>
+<form asp-action="Checkout" method="post">
+    <table class="table table-borderless">
+        <thead class="thead-dark">
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Item Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CartItem item in Model.Cart.List)
+            {
+                <tr>
+                    <td style="text-align: center;"><img style="height: 50px; width: 50px;" src="~/images/@item.Instrument.LogoImage" alt="" /></td>
+                    <td>
+                        @item.Instrument.Name
+                    </td>
+                    <td>
+
+                        <p>
+                            @item.Instrument.Brand.BrandName
+                        </p>
+                    </td>
+                    <td>@item.Instrument.Price.ToString("c")</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Subtotal.ToString("c")</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Order Subtotal:</td>
+                <td>@Model.Cart.Subtotal.ToString("c")</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Shipping:</td>
+                <td>$0.00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Tax:</td>
+                <td>$0.00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><strong>Total:</strong></td>
+                <td><strong>@Model.Cart.Subtotal.ToString("c")</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>Shipping and Billing Information:</h2>
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label for="FirstName">First Name</label>
+            <input type="text" class="form-control" asp-for="FirstName" placeholder="First Name">
+            <div>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="LastName">Last Name</label>
+            <input type="text" class="form-control" asp-for="LastName" placeholder="Last Name">
+            <div>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="Phone">Phone</label>
+            <input type="text" class="form-control" asp-for="Phone" placeholder="555-555-555">
+            <div>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label for="City">Address</label>
+            <input type="text" class="form-control" asp-for="Address" placeholder="Address">
+            <div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="State">City</label>
+            <input type="text" class="form-control" asp-for="City" placeholder="City">
+            <div>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="State">State</label>
+            <input type="text" class="form-control" asp-for="State" placeholder="Zip">
+            <div>
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+            <label for="Zip">Zip</label>
+            <input type="text" class="form-control" asp-for="Zip" placeholder="Zip">
+            <div>
+                <span asp-validation-for="Zip" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="Email">Email</label>
+            <input type="text" class="form-control" asp-for="Email" placeholder="Email">
+            <div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <h3>Payment Information:</h3>
+    <div class="form-row">
+        <div class="form-group col-md-6 mb-3">
+            <label for="CCNum">Card Owner</label>
+            <input type="text" class="form-control" placeholder="Card Owner Name" asp-for="CCName">
+            <div>
+                <span asp-validation-for="CCName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group col-md-6 mb-3">
+            <label for="cardNumber">Card Number</label>
+            <div class="input-group">
+                <input type="text" class="form-control" asp-for="CCNum" placeholder="Valid card number">
+                <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+            </div>
+            <div>
+                <span asp-validation-for="CCNum" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row col-md-8">
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <label><span class="hidden-xs">Expiration Date</span></label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" asp-for="CCMon" placeholder="MM">
+                        <input type="number" class="form-control" asp-for="CCYear" placeholder="YY">
+                    </div>
+                    <div>
+                        <span asp-validation-for="CCMon" class="text-danger"></span>
+                        <span asp-validation-for="CCYear" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group mb-4">
+                    <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                        CVV <i class="fa fa-question-circle d-inline"></i>
+                    </label>
+                    <input type="text" class="form-control" asp-for="CCCode">
+                    <div>
+                        <span asp-validation-for="CCCode" class="text-danger"></span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <ul class="list-group mb-4">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-primary">Place Order</button>
+                        <a asp-action="Index" class="btn btn-primary">Cancel</a>
+                    </div>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</form>

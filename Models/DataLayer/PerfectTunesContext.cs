@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PerfectTunes.Models.DomainModels;
 using System;
 using System.Threading.Tasks;
 
@@ -29,6 +30,9 @@ namespace PerfectTunes.Models
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Instrument> Instruments { get; set; }
         public DbSet<Department> Departments { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+        //public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,7 +55,7 @@ namespace PerfectTunes.Models
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             string username = "admin";
-            string password = "Sesame";
+            string password = "Password1234!";
             string roleName = "Admin";
 
             if (await roleManager.FindByNameAsync(roleName) == null)

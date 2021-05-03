@@ -21,14 +21,17 @@ namespace PerfectTunes.Models
         public int InstrumentId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public Brand brand { get; set; }
+        public Brand Brand { get; set; }
+
+        public string LogoImage { get; set; }
 
         public void Load(Instrument instrument)
         {
             InstrumentId = instrument.InstrumentId;
             Name = instrument.Name;
             Price = instrument.Price;
-            brand = instrument.Brand;
+            Brand = instrument.Brand;
+            LogoImage = instrument.LogoImage;
         }
     }
 
