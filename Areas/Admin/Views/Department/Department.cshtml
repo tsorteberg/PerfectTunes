@@ -14,9 +14,11 @@
 * to my program.
 ***************************************************************/
 -->
-@model DepartmentViewModel
+@model Department
 
 @{
+    // this view is used for add, edit, and delete.
+    // Which one is determined by the action method name.
     var action = ViewContext.RouteData.Values["action"].ToString().Capitalize();
 
     ViewData["Title"] = $" | {action} Department";
@@ -26,25 +28,43 @@
 
 <form asp-action="@action" asp-area="Admin" method="post">
 
-    <input type="hidden" asp-for="Department.DepartmentId" />
-    <input type="hidden" name="Operation" value="@action" />
+    <div class="form-group row">
+        <div class="col-sm-2"><label>DepartmentId:</label></div>
 
-    @if (Operation.IsDelete(action))
-    {
-        <div class="col-sm-4"><label>@Model.Department.Name</label></div>
-        <input type="hidden" asp-for="Department.Name" />
-    }
-    else
-    {
-        <div class="form-group row">
-            <div class="col-sm-2"><label>Department Name:</label></div>
+        @if (Operation.IsAdd(action))
+        {
             <div class="col-sm-4">
-                <input type="text" asp-for="@Model.Department.Name" class="form-control" />
+                <input type="text" asp-for="DepartmentId" class="form-control" />
             </div>
             <div class="col-sm-6">
-                <span asp-validation-for="@Model.Department.Name" class="text-danger"></span>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="col-sm-4"><label>@Model.DepartmentId</label></div>
+            <input type="hidden" asp-for="DepartmentId" />
+        }
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2"><label>Name:</label></div>
+
+        @if (Operation.IsDelete(action))
+        {
+            <div class="col-sm-4"><label>@Model.Name</label></div>
+            <input type="hidden" asp-for="Name" />
+        }
+        else
+        {
+            <div class="col-sm-4">
+                <input type="text" asp-for="Name" class="form-control" />
+            </div>
+            <div class="col-sm-6">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        }
+    </div>
 
     <div class="row">
         <div class="col-sm-4 offset-sm-2">
@@ -52,5 +72,4 @@
             <a asp-action="Index" class="btn btn-primary">Cancel</a>
         </div>
     </div>
-    }
 </form>

@@ -31,7 +31,12 @@
             <th>
                 @{ routes.SetSortAndDirection(nameof(Department.Name), current); }
                 <a asp-action="Index" asp-all-route-data="@routes"
-                   class="text-white">Departments</a>
+                   class="text-white">Department Name</a>
+            </th>
+            <th>
+                @{ routes.SetSortAndDirection(nameof(Department.DepartmentId), current); }
+                <a asp-action="Index" asp-all-route-data="@routes"
+                   class="text-white">Department Id</a>
             </th>
             <th></th>
         </tr>
@@ -39,15 +44,16 @@
     <tbody>
         @foreach (Department department in Model.Departments)
         {
-            <tr>
-                <td>@department.Name</td>
-                <td>
-                    <div class="float-right">
-                        <a asp-action="Edit" asp-route-id="@department.DepartmentId" class="btn btn-primary">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@department.DepartmentId" class="btn btn-primary">Delete</a>
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td>@department.Name</td>
+            <td>@department.DepartmentId</td>
+            <td>
+                <div class="float-right">
+                    <a asp-action="Edit" asp-route-id="@department.DepartmentId" class="btn btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@department.DepartmentId" class="btn btn-primary">Delete</a>
+                </div>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

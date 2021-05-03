@@ -114,10 +114,6 @@ namespace PerfectTunes.Areas.Admin.Controllers
                     vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
                     vm.Brand.LogoImage = uniqueFileName;
                 }
-                else
-                {
-                    vm.Brand.LogoImage = "comingsoon.jpg";
-                }
 
                 data.Brands.Update(vm.Brand);
                 data.Save();

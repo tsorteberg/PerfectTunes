@@ -22,12 +22,10 @@ namespace PerfectTunes.Areas.Admin.Controllers
     [Area("Admin")]
     public class DepartmentController : Controller
     {
-        private PerfectTunesUnitOfWork data { get; set; }
-        private Repository<Department> repo { get; set; }
+        private Repository<Department> data { get; set; }
         public DepartmentController(PerfectTunesContext ctx)
         {
-            data = new PerfectTunesUnitOfWork(ctx);
-            repo = new Repository<Department>(ctx);
+            data = new Repository<Department>(ctx);
         }
 
         public ViewResult Index(GridDTO vals)
@@ -47,9 +45,9 @@ namespace PerfectTunes.Areas.Admin.Controllers
 
             var vm = new DepartmentListViewModel
             {
-                Departments = data.Departments.List(options),
+                Departments = data.List(options),
                 CurrentRoute = builder.CurrentRoute,
-                TotalPages = builder.GetTotalPages(data.Departments.Count)
+                TotalPages = builder.GetTotalPages(data.Count)
             };
 
             return View(vm);
@@ -63,13 +61,11 @@ namespace PerfectTunes.Areas.Admin.Controllers
 
         [HttpPost]
         public IActionResult Add(DepartmentViewModel vm)
-        {
-            // server-side version of remote validation
-            
+        {    
             var validate = new Validate(TempData);
             if (!validate.IsDepartmentChecked)
             {
-                validate.CheckDepartment(vm.Department.DepartmentId, repo);
+                validate.CheckDepartment(vm.Department.DepartmentId, data);
                 if (!validate.IsValid)
                 {
                     ModelState.AddModelError(nameof(vm.Department.DepartmentId), validate.ErrorMessage);
@@ -78,7 +74,7 @@ namespace PerfectTunes.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                data.Departments.Insert(vm.Department);
+                data.Insert(vm.Department);
                 data.Save();
                 validate.ClearDepartment();
                 TempData["message"] = $"{vm.Department.Name} added to Departments.";
@@ -96,59 +92,52 @@ namespace PerfectTunes.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ViewResult Edit(string id) => GetDepartment(id, "Edit");
+        public ViewResult Edit(string id) => View("Department", data.Get(id));
 
         [HttpPost]
-        public IActionResult Edit(DepartmentViewModel vm)
+        public IActionResult Edit(Department department)
         {
             if (ModelState.IsValid)
             {
-
-                data.Departments.Update(vm.Department);
+                data.Update(department);
                 data.Save();
-
-                TempData["message"] = $"{vm.Department.Name} updated.";
+                TempData["message"] = $"{department.Name} updated.";
                 return RedirectToAction("Index");
             }
             else
             {
-                Load(vm, "Edit");
-                return View("Instrument", vm);
+                return View("Department", department);
             }
         }
 
         [HttpGet]
-        public ViewResult Delete(string id) => GetDepartment(id, "Delete");
-
-        [HttpPost]
-        public IActionResult Delete(DepartmentViewModel vm)
+        public IActionResult Delete(string id)
         {
-            data.Departments.Delete(vm.Department);
-            data.Save();
-            TempData["message"] = $"{vm.Department.Name} removed from Departments.";
-            return RedirectToAction("Index");
-        }
-
-        private ViewResult GetDepartment(string id, string operation)
-        {
-            var department = new DepartmentViewModel();
-            Load(department, operation, id);
-            return View("Department", department);
-        }
-
-        private void Load(DepartmentViewModel vm, string op, string id = null)
-        {
-            if (Operation.IsAdd(op))
+            var department = data.Get(new QueryOptions<Department>
             {
-                vm.Department = new Department();
+                Includes = "Instruments",
+                Where = d => d.DepartmentId == id
+            });
+
+            if (department.Instruments.Count > 0)
+            {
+                TempData["message"] = $"Can't delete department {department.Name} "
+                                    + "because it's associated with these instruments.";
+                return RedirectToAction("Index");
             }
             else
             {
-                vm.Department = data.Departments.Get(new QueryOptions<Department>
-                {
-                    Where = d => d.DepartmentId == vm.Department.DepartmentId
-                });
+                return View("Department", department);
             }
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Department department)
+        {
+            data.Delete(department);
+            data.Save();
+            TempData["message"] = $"{department.Name} removed from Genres.";
+            return RedirectToAction("Index");
         }
     }
 }

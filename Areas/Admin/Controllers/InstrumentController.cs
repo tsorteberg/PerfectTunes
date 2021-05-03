@@ -118,10 +118,6 @@ namespace PerfectTunes.Areas.Admin.Controllers
                     vm.Image.CopyTo(new FileStream(filePath, FileMode.Create));
                     vm.Instrument.LogoImage = uniqueFileName;
                 }
-                else
-                {
-                    vm.Instrument.LogoImage = "comingsoon.jpg";
-                }
 
                 data.Instruments.Update(vm.Instrument);
                 data.Save();
