@@ -16,14 +16,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PerfectTunes.Models;
-using PerfectTunes.Models.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace PerfectTunes.Controllers
 {
-    [Authorize]
     public class CartController : Controller
     {
         private Repository<Instrument> data { get; set; }
@@ -141,6 +139,7 @@ namespace PerfectTunes.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         public ViewResult Checkout() {
 
@@ -160,6 +159,7 @@ namespace PerfectTunes.Controllers
             return View(vm);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Checkout(OrderViewModel vm)
         {
@@ -211,6 +211,9 @@ namespace PerfectTunes.Controllers
 
                 repo.Insert(order);
                 data.Save();
+
+                cart.Clear();
+                cart.Save();
 
                 TempData["message"] = $"Your order has been placed.";
 

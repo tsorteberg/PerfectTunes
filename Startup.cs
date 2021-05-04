@@ -39,7 +39,7 @@ namespace PerfectTunes
             services.AddMemoryCache();
             services.AddSession();
             services.AddControllersWithViews().AddNewtonsoftJson();
-            services.AddDbContext<PerfectTunesContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PerfectTunesContext")));
+            services.AddDbContext<PerfectTunesContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("PerfectTunesContext")));
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<PerfectTunesContext>()
               .AddDefaultTokenProviders();

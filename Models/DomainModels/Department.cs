@@ -29,6 +29,6 @@ namespace PerfectTunes.Models
         [Required(ErrorMessage = "Please enter a department name.")]
         public string Name { get; set; }
 
-        public ICollection<Instrument> Instruments { get; set; }
+        public virtual ICollection<Instrument> Instruments { get; set; }
     }
 }

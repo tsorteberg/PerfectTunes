@@ -1,0 +1,85 @@
+﻿<!--
+/***************************************************************
+* Name        : Areas/Admin/Views/Order/Index.cshtml
+* Author      : Tom Sorteberg
+* Created     : 05/03/2021
+* Course      : CIS 174
+* Version     : 1.0
+* OS          : Windows 10 Pro, Visual Studio Community 2019
+* Copyright   : This is my own original work based on
+*               specifications issued by our instructor
+* Description : Final Project
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program.
+***************************************************************/
+-->
+@model OrderListViewModel
+
+@{
+    ViewData["Title"] = " | Manage Orders";
+
+    RouteDictionary current = Model.CurrentRoute;
+    RouteDictionary routes = Model.CurrentRoute.Clone();
+}
+
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @{ routes.SetSortAndDirection(nameof(Order.OrderId), current); }
+                <a asp-action="Index" asp-all-route-data="@routes"
+                   class="text-white">OrderId</a>
+            </th>
+            <th>
+                @{ routes.SetSortAndDirection(nameof(Order.FirstName), current); }
+                <a asp-action="Index" asp-all-route-data="@routes"
+                   class="text-white">First Name</a>
+            </th>
+            <th>
+                @{ routes.SetSortAndDirection(nameof(Order.LastName), current); }
+                <a asp-action="Index" asp-all-route-data="@routes"
+                   class="text-white">Last Name</a>
+            </th>
+            <th>
+                @{ routes.SetSortAndDirection(nameof(Order.OrderDate), current); }
+                <a asp-action="Index" asp-all-route-data="@routes"
+                   class="text-white">Order Date</a>
+            </th>
+            <th>
+                @{ routes.SetSortAndDirection(nameof(Order.Status), current); }
+                <a asp-action="Index" asp-all-route-data="@routes"
+                   class="text-white">Status</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Order order in Model.Orders)
+        {
+        <tr>
+            <td>@order.OrderId</td>
+            <td>@order.FirstName</td>
+            <td>@order.LastName</td>
+            <td>@order.OrderDate</td>
+            <td>@order.Status</td>
+            <td>
+                <div class="float-right">
+                    <a asp-action="Update" asp-route-id="@order.OrderId" class="btn btn-primary">Update</a>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    routes = Model.CurrentRoute.Clone();
+
+    for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        routes.PageNumber = i;
+        <a asp-action="Index" asp-all-route-data="@routes"
+           class="btn btn-outline-primary @Nav.Active(i, current.PageNumber)">@i</a>
+    }
+}

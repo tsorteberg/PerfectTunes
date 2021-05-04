@@ -20,12 +20,14 @@ namespace PerfectTunes.Controllers
 {
     public class HomeController : Controller
     {
+
         private Repository<Instrument> data { get; set; }
-        public HomeController(PerfectTunesContext ctx) => data = new Repository<Instrument>(ctx);
+        public HomeController(PerfectTunesContext ctx) {
+            data = new Repository<Instrument>(ctx);
+        } 
 
         public ViewResult Index()
         {
-            // get a book at random
             var random = data.Get(new QueryOptions<Instrument>
             {
                 OrderBy = b => Guid.NewGuid()
@@ -33,11 +35,5 @@ namespace PerfectTunes.Controllers
 
             return View(random);
         }
-
-        public ContentResult Register()
-        {
-            return Content("Registration has not been implemented yet. It is implemented in chapter 16.");
-        }
-
     }
 }

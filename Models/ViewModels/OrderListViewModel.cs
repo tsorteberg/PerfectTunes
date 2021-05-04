@@ -1,7 +1,7 @@
 ﻿/***************************************************************
-* Name        : /Models/DomainModels/User.cs
+* Name        : PerfectTunes/Models/ViewModels/OrderListViewModel.cs
 * Author      : Tom Sorteberg
-* Created     : 05/01/2021
+* Created     : 05/03/2021
 * Course      : CIS 174
 * Version     : 1.0
 * OS          : Windows 10 Pro, Visual Studio Community 2019
@@ -13,18 +13,13 @@
 * to my program.         
 ***************************************************************/
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
-
 
 namespace PerfectTunes.Models
 {
-    public class User : IdentityUser
+    public class OrderListViewModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
-        [NotMapped]
-        public IList<string> RoleNames { get; set; }
+        public IEnumerable<Order> Orders { get; set; }
+        public RouteDictionary CurrentRoute { get; set; }
+        public int TotalPages { get; set; }
     }
 }

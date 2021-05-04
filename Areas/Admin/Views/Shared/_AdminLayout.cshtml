@@ -58,6 +58,12 @@
             Manage Users
         </a>
     </li>
+    <li class="nav-item">
+        <a asp-action="Index" asp-controller="Order"
+           class="nav-link @Nav.Active("Order", current)">
+            Manage Orders
+        </a>
+    </li>
 </ul>
 
 @RenderBody()

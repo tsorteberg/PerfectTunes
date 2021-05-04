@@ -55,34 +55,34 @@ namespace PerfectTunes.Areas.Admin.Controllers
 
         [HttpGet]
         public ViewResult Add() {
-            var department = new DepartmentViewModel();
+            var department = new Department();
             return View("Department", department);
         }
 
         [HttpPost]
-        public IActionResult Add(DepartmentViewModel vm)
+        public IActionResult Add(Department department)
         {    
             var validate = new Validate(TempData);
             if (!validate.IsDepartmentChecked)
             {
-                validate.CheckDepartment(vm.Department.DepartmentId, data);
+                validate.CheckDepartment(department.DepartmentId, data);
                 if (!validate.IsValid)
                 {
-                    ModelState.AddModelError(nameof(vm.Department.DepartmentId), validate.ErrorMessage);
+                    ModelState.AddModelError(nameof(department.DepartmentId), validate.ErrorMessage);
                 }
             }
 
             if (ModelState.IsValid)
             {
-                data.Insert(vm.Department);
+                data.Insert(department);
                 data.Save();
                 validate.ClearDepartment();
-                TempData["message"] = $"{vm.Department.Name} added to Departments.";
+                TempData["message"] = $"{department.Name} added to Departments.";
                 return RedirectToAction("Index");
             }
             else
             {
-                return View("Department", vm);
+                return View("Department", department);
             }
             //string deptId = vm.Department.Name.Replace(' ', '_').ToLower();
             //vm.Department.DepartmentId = deptId;

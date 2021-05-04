@@ -1,0 +1,227 @@
+﻿<!--
+/***************************************************************
+* Name        : Admin/Views/Order/Order.cshtml
+* Author      : Tom Sorteberg
+* Created     : 05/03/2021
+* Course      : CIS 174
+* Version     : 1.0
+* OS          : Windows 10 Pro, Visual Studio Community 2019
+* Copyright   : This is my own original work based on
+*               specifications issued by our instructor
+* Description : Final Project
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program.
+***************************************************************/
+-->
+@model Order
+
+@{
+    // this view is used for add, edit, and delete.
+    // Which one is determined by the action method name.
+    var action = ViewContext.RouteData.Values["action"].ToString().Capitalize();
+
+    ViewData["Title"] = $" | {action} Department";
+
+}
+
+<h1>@action Orders</h1>
+
+<h2>Order Details:</h2>
+
+<form asp-action="@action" asp-area="Admin" method="post">
+
+    <div class="form-group row">
+        <div class="col-sm-2"><label>OrderId:</label></div>
+        <div class="col-sm-4"><label>@Model.OrderId</label></div>
+        <input type="hidden" asp-for="OrderId" />
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2"><label>Order Date:</label></div>
+        <div class="col-sm-4"><label>@Model.OrderDate</label></div>
+        <input type="hidden" asp-for="OrderDate" />
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>First Name:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="FirstName" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Last Name:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="LastName" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Address:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="Address" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>City:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="City" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>State:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="State" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="State" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Zip:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="Zip" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="Zip" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Phone:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="Phone" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Email:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="Email" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Status:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="Status" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            <label>Tracking Number:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="text" asp-for="TrackingNumber" class="form-control" />
+        </div>
+        <div class="col-sm-6">
+            <span asp-validation-for="TrackingNumber" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div>
+        <input type="text" asp-for="UserId" class="form-control" hidden />
+        <input type="text" asp-for="CCName" class="form-control" hidden />
+        <input type="text" asp-for="CCNum" class="form-control" hidden />
+        <input type="text" asp-for="CCMon" class="form-control" hidden />
+        <input type="text" asp-for="CCYear" class="form-control" hidden />
+        <input type="text" asp-for="CCCode" class="form-control" hidden />
+        <input type="text" asp-for="SubTotal" class="form-control" hidden />
+        <input type="text" asp-for="Total" class="form-control" hidden />
+    </div>
+
+    <h2>Order Summary</h2>
+    <table class="table table-borderless">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Item Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (OrderItem item in Model.OrderItems)
+            {
+                double test = item.Quantity * item.Price;
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Brand</td>
+                    <td>@item.Price.ToString("c")</td>
+                    <td>@item.Quantity</td>
+                    <td>@test.ToString("c")</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Order Subtotal:</td>
+                <td>@Model.SubTotal.ToString("c")</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Shipping:</td>
+                <td>$0.00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Tax:</td>
+                <td>$0.00</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><strong>Total:</strong></td>
+                <td><strong>@Model.SubTotal.ToString("c")</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="form-group row">
+        <div class="">
+            <button type="submit" class="btn btn-primary">@action</button>
+            <a asp-action="Index" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</form>
